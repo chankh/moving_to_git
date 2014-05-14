@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Moving to GIT</title>
+
+		<meta name="description" content="An introduction to GIT for SVN users.">
+		<meta name="author" content="KH Chan">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+		<link ref="stylesheet" href="css/print/paper.css" type="text/css" media="print">
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body style="transition: -webkit-transform 0.8s ease; -webkit-transition: -webkit-transform 0.8s ease;">
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section class="center">
+					<h1>Moving to GIT</h1>
+					<h3>For SVN users</h3>
+					<br/>
+					<p>
+						<small>Created by <a href="https://plus.google.com/+KwunHokChan">KH Chan</a></small>
+					</p>
+
+					<aside class="notes">
+						Slide notes.
+					</aside>
+				</section>
+
+				<section>
+					<h2>Agenda</h2>
+					<ul>
+					<p class="fragment roll-in">Learn about Git and DVCS</p>
+					<p class="fragment roll-in">Learn about differences between <i>svn</i> and <i>git</i></p>
+					<p class="fragment roll-in">Development workflow with <i>git</i></p>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Assumptions</h2>
+					<br/>
+					<ul>
+						<li class="fragment roll-in">You know what is <i>svn</i> and Subversion</li>
+						<li class="fragment roll-in">You are a Subversion user</li>
+						<li class="fragment roll-in">You know the <i>svn</i> commands</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>What is CVCS?</h2>
+					<p>CVCS - Centralized Version Control System</p>
+					<div style="float:left">
+						<ul>
+							<li>CVS</li>
+							<li>Subversion</li>
+							<li>Perforce</li>
+						</ul>
+					</div>
+					<div style="float:right">
+						<img src="pics/cvcs.png"/>
+					</div>
+				</section>
+
+				<section>
+					<h2>What is DVCS?</h2>
+					<p>DVCS - Distributed Version Control System</p>
+					<div style="float:left">
+						<ul>
+							<li>Git</li>
+							<li>Mercurial</li>
+							<li>Bazaar</li>
+							<li>Darcs</li>
+						</ul>
+					</div>
+					<div style="float:right">
+						<img src="pics/dvcs.png"/>
+					</div>
+				</section>
+
+				<section class="center">
+					<h2>Let's review some Subversion workflows</h2>
+				</section>
+
+				<section>
+					<h2>Initial Checkout</h2>
+					<br/>
+					<img src="pics/svn_initial_checkout.png" />
+				</section>
+
+				<section>
+					<h2>Commit and Update</h2>
+					<br/>
+					<img src="pics/svn_commit_update.png" />
+				</section>
+
+				<section class="center">
+					<h2>Alright, let's see the commands</h2>
+				</section>
+
+				<section>
+					<h2>Initial Checkout</h2>
+					<br/>
+					<p style="text-align:left">Subversion
+						<pre><code data-trim class="bash">
+							svn checkout http://some.repository/repo
+						</code></pre>
+					</p><br/>
+					<p style="text-align:left">Git
+						<pre><code data-trim class="bash">
+							git clone http://some.repository/repo.git
+						</code></pre>
+					</p>
+				</section>
+
+				<section>
+					<h2>Initial Checkout</h2>
+					<br/>
+					<img src="pics/svn_git_initial.png" />
+				</section>
+
+				<section>
+					<h3>Differences between checkout and clone</h3>
+					<br/>
+					<div style="text-align:left">
+						<p>Subversion</p>
+						<ul>
+							<li>keeps a copy of the last revision of the repo</li>
+						</ul>
+						<p>Git</p>
+						<ul>
+							<li>keeps a copy of the entire repo</li>
+						</ul>
+					</div>
+				</section>
+
+				<section>
+					<h2>Adding a file</h2>
+					<br/>
+					<p style="text-align:left">Subversion
+						<pre><code data-trim class="bash">
+							svn add path/to/file
+						</code></pre>
+					</p><br/>
+					<p style="text-align:left">Git
+						<pre><code data-trim class="bash">
+							git add path/to/file
+						</code></pre>
+					</p>
+				</section>
+
+				<section>
+					<h3>Differences for adding</h3>
+					<br/>
+					<div style="text-align:left">
+						<p>Subversion</p>
+						<ul>
+							<li>used for adding new files</li>
+						</ul>
+						<p>Git</p>
+						<ul>
+							<li>used for adding new files AND</li>
+							<li>recording modification to existing files</li>
+							<li>able to choose hunks of patches to add with <em>-p</em></li>
+							<pre><code data-trim class="bash">
+							git add -p path/to/file
+							</code></pre>
+						</ul>
+					</div>
+				</section>
+
+				<section>
+					<h2>Status</h2>
+					<br/>
+					<p style="text-align:left">Subversion
+						<pre><code data-trim class="bash">
+							svn st -OR- svn status
+						</code></pre>
+					</p><br/>
+					<p style="text-align:left">Git
+						<pre><code data-trim class="bash">
+							git status
+						</code></pre>
+					</p>
+				</section>
+
+				<section>
+					<h3>Differences for status</h3>
+					<br/>
+					<div style="text-align:left">
+						<p>Subversion</p>
+						<ul>
+							<li>tracks unversioned, new, deleted, modified files</li>
+						</ul>
+						<p>Git</p>
+						<ul>
+							<li>tracks unversioned, new, deleted, modified, modified but not 'add'-ed files</li>
+						</ul>
+					</div>
+				</section>
+
+				<section>
+					<h2>Committing</h2>
+					<br/>
+					<p style="text-align:left">Subversion
+						<pre><code data-trim class="bash">
+svn commit
+svn commit -m "commit message"
+svn commit path/to/file
+						</code></pre>
+					</p><br/>
+					<p style="text-align:left">Git
+						<pre><code data-trim class="bash">
+git commit
+git commit -m "commit message"
+git commit path/to/file
+						</code></pre>
+					</p>
+				</section>
+
+				<section>
+					<h3>Committing</h3>
+					<br/>
+					<img src="pics/svn_git_commit.png" />
+				</section>
+
+				<section>
+					<h3>Differences for committing</h3>
+					<br/>
+					<div style="text-align:left">
+						<p>Subversion</p>
+						<ul>
+							<li>sends changes to remote repository</li>
+							<li>revision number is incrementing integer</li>
+						</ul>
+						<p>Git</p>
+						<ul>
+							<li>only commits to local repository</li>
+							<li>revision number is hash of the commit</li>
+						</ul>
+					</div>
+				</section>
+
+				<section>
+					<h2>Pushing to remote repository</h2>
+					<br/>
+					<div style="text-align:left">
+						<p>Subversion
+							<ul><li>code is pushed when committing</li></ul>
+						</p><br/>
+						<p>Git
+							<pre><code data-trim class="bash">
+git push
+							</code></pre>
+						</p>
+					</div>
+				</section>
+
+				<section>
+					<h3>Pushing to remote repository</h3>
+					<br/>
+					<img src="pics/svn_git_push.png" />
+				</section>
+
+				<section>
+					<h2>Reverting</h2>
+					<br/>
+					<div style="text-align:left">
+						<p>Subversion
+							<pre><code data-trim class="bash">
+svn revert path/to/file
+							</code></pre>
+						</p><br/>
+						<p>Git
+							<pre><code data-trim class="bash">
+git checkout path/to/file
+							</code></pre>
+							<small style="padding-left:50px">yea, it's not so obvious</small>
+						</p>
+					</div>
+				</section>
+
+				<section>
+					<h2>Updating</h2>
+					<br/>
+					<p style="text-align:left">Subversion
+						<pre><code data-trim class="bash">
+							svn update
+						</code></pre>
+					</p><br/>
+					<p style="text-align:left">Git
+						<pre><code data-trim class="bash">
+							git pull
+						</code></pre>
+					</p>
+				</section>
+
+				<section>
+					<h2>Updating</h2>
+					<br/>
+					<img src="pics/svn_git_update.png" />
+				</section>
+
+				<section>
+					<h2>GIT commands you must know</h2>
+					<br/>
+					<div style="float:left">
+					<ol>
+						<li>git clone</li>
+						<li>git add</li>
+						<li>git status</li>
+						<li>git commit</li>
+						<li>git push</li>
+						<li>git checkout</li>
+						<li>git pull</li>
+					</ol>
+					</div>
+					<div style="float:right">
+					<img src="pics/git_flow_simplified2.png"/>
+					</div>
+				</section>
+<!--
+				<section>
+					<h2>Local Operations</h2>
+					<br/>
+					<img src="pics/scp_gitFlow.png" alt="simple git flow"/>
+				</section>
+-->
+				<section>
+					<h2>More advanced GIT</h2>
+					<br/>
+					<ul>
+						<li>git stash</li>
+						<li>git branch</li>
+						<li>git merge</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Using GIT Stash</h2>
+					<br/>
+					<div class="fragment roll-in">
+					<p>SVN</p>
+					<pre><code data-trim class="bash">
+# svn diff > changes.diff
+# svn revert -R .
+					</code></pre>
+					</div>
+					<div class="fragment roll-in">
+					<p>GIT</p>
+					<pre><code data-trim class="bash">
+# git stash
+OR
+# git stash save
+					</code></pre>
+					</div>
+				</section>
+
+				<section>
+					<h2>Branching and Merging</h2>
+					<p class="center"><a href="https://pcottle.github.io/learnGitBranching/?NODEMO" target="_learnGitBranching">https://pcottle.github.io/learnGitBranching</a>
+				</section>
+
+				<section>
+					<h2>Git Flow</h2>
+					<img src="pics/git_flow_horizontal.png" alt="Git branching model"/>
+					<small>Reference: <a href="http://nvie.com/posts/a-successful-git-branching-model/">http://nvie.com/posts/a-successful-git-branching-model/</a></small>
+				</section>
+
+				<section>
+					<h2>Setting up your Git environment</h2>
+					<br/>
+					<pre><code data-trim class="bash">
+# Your identity
+$ git config --global user.name "KH Chan"
+$ git config --global user.email "khchan@maaii.com"
+
+# Your editor
+$ git config --global core.editor vim
+
+# Check your settings
+$ git config --list
+user.name=KH Chan
+user.email=khchan@maaii.com
+color.status=auto
+color.branch=auto
+color.interactive=auto
+color.diff=auto
+...
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Gerrit Code Review</h2>
+					<br/>
+					<a href="http://sourcecontrol.maaii.com:9080">http://sourcecontrol.maaii.com:9080</a>
+				</section>
+
+				<section>
+					<h2>References</h2>
+					<ul>
+						<li>
+							<a href="http://git-scm.com/book">Pro Git</a><br/>
+							<small>(http://git-scm.com/book)</small>
+						</li>
+						<li>
+							<a href="http://nvie.com/posts/a-successful-git-branching-model/">A successful Git branching model</a><br/>
+							<small>(http://nvie.com/posts/a-successful-git-branching-model/)</small>
+						</li>
+						<li>
+							<a href="https://pcottle.github.io/learnGitBranching/">Learn Git Branching</a><br/>
+							<small>(https://pcottle.github.io/learnGitBranching/)</small>
+						</li>
+						<li>
+							<a href="https://www.atlassian.com/git/tutorial/git-basics">Atlassian Git Tutorials</a><br/>
+							<small>(https://www.atlassian.com/git/tutorial/git-basics)</small>
+						</li>
+						<li>
+							<a href="http://gitready.com">git ready</a><br/>
+							<small>(http://gitready.com)</small>
+						</li>
+					</ul>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: false,
+				progress: true,
+				history: true,
+				center: false,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
